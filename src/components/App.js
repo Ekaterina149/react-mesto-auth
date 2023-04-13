@@ -10,6 +10,8 @@ import DeleteCardPopup from "./DeleteCardPopup";
 import React, { useState, useEffect } from "react";
 import { api, setApi } from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { Route, Routes, Navigate } from "react-router-dom";
+import NewComponent from "./NewComponent";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -139,15 +141,23 @@ function App() {
       <div className="root">
         <div className="page">
           <Header />
-          <Main
-            cards={cards}
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
-            onCardClick={handleCardClick}
-            onDeleteCardClick={handleDeletePopupClick}
-            onCardLike={handleCardLike}
-          />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  cards={cards}
+                  onEditProfile={handleEditProfileClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onEditAvatar={handleEditAvatarClick}
+                  onCardClick={handleCardClick}
+                  onDeleteCardClick={handleDeletePopupClick}
+                  onCardLike={handleCardLike}
+                />
+              }
+            />
+            <Route path="/sign-in" element={<NewComponent />} />
+          </Routes>
           <EditProfilePopup
             formName="edit"
             title="Редактировать профиль"

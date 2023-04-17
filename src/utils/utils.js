@@ -7,4 +7,14 @@ const setDataHeaders = {
 };
 
 const baseUrl = "https://mesto.nomoreparties.co/v1/cohort-60";
-export { getDataHeaders, setDataHeaders, baseUrl };
+
+const baseUrlAuth = "https://auth.nomoreparties.co";
+const authDataHeaders = { "Content-Type": "application/json" };
+
+export {
+  getDataHeaders,
+  setDataHeaders,
+  baseUrl,
+  baseUrlAuth,
+  authDataHeaders,
+};

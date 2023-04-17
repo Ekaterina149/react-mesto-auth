@@ -1,13 +1,14 @@
 .user__input {
   border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding-bottom: 8px;
+  border-bottom: 2px solid #cccccc;
+  padding-bottom: 13px;
   margin-top: 0px;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  color: #000000;
+  color: #ffffff;
+  background-color: transparent;
 }
 
 .user__input:focus {
@@ -16,40 +17,44 @@
 
 .user__input::-webkit-input-placeholder {
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
   line-height: 17px;
-  color: #c4c4c4;
+  color: #cccccc;
   padding-bottom: 13px;
   opacity: 1;
+  background-color: transparent;
 }
 
 .user__input::-moz-placeholder {
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
   line-height: 17px;
-  color: #c4c4c4;
+  color: #cccccc;
   padding-bottom: 13px;
   opacity: 1;
+  background-color: transparent;
 }
 
 .user__input::-ms-input-placeholder {
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
   line-height: 17px;
-  color: #c4c4c4;
+  color: #cccccc;
   padding-bottom: 13px;
   opacity: 1;
+  background-color: transparent;
 }
 
 .user__input::placeholder {
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
   line-height: 17px;
-  color: #c4c4c4;
+  color: #cccccc;
   padding-bottom: 13px;
   opacity: 1;
+  background-color: transparent;
 }

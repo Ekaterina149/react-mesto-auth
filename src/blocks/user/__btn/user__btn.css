@@ -1,17 +1,18 @@
-.user__submit {
-  margin-top: 48px;
+.user__btn {
+  margin-top: 216px;
   border: none;
-  padding: 14px 0 18px 0;
+  padding: 14px 0 14px 0;
   font-weight: 400;
   font-size: 18px;
   line-height: 22px;
   text-align: center;
   box-sizing: border-box;
   border-radius: 2px;
+  background-color: #ffffff;
 }
 
 @media screen and (max-width: 500px) {
-  .user__submit {
+  .user__btn {
     font-size: 14px;
     line-height: 17px;
     padding: 14px 0 14px 0;

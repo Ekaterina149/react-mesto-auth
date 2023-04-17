@@ -36,9 +36,7 @@ function PopupWithForm({
           method="get"
           onSubmit={onSubmit}
         >
-          <fieldset className="popup__fieldset" id="fieldsetname">
-            {children}
-          </fieldset>
+          <fieldset className="popup__fieldset">{children}</fieldset>
           <button
             className="popup__submit popup__submit_valid"
             type="submit"

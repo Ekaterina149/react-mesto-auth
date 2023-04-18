@@ -61,12 +61,6 @@ function Login({ onAuthorize }) {
           >
             Войти
           </button>
-          {/* {linkBottomPage ? (
-            <a className="user__link" href="#" target="_blank">
-              {linkBottomPage }
-            </a>
-          ):  <a>
-        </a>} */}
         </form>
       </div>
     </div>

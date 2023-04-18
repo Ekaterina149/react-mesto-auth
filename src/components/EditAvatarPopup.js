@@ -1,5 +1,5 @@
 import PopupWithForm from "./PopupWithForm";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 function EditAvatarPopup({
   formName,
   title,
@@ -9,6 +9,12 @@ function EditAvatarPopup({
   isLoading,
 }) {
   const avatarLink = useRef();
+
+  useEffect(() => {
+    if (!isOpen) {
+      avatarLink.current.value = "";
+    }
+  }, [isOpen]);
 
   function handleSubmit(evt) {
     evt.preventDefault();

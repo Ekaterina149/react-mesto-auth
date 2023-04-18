@@ -1,5 +1,5 @@
 {
-  "name": "mesto-react",
+  "name": "mesto-react-auth",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -38,7 +38,7 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://ekaterina149.github.io/mesto-react/",
+  "homepage": "https://ekaterina149.github.io/mesto-react-auth/",
   "devDependencies": {
     "gh-pages": "^5.0.0"
   }

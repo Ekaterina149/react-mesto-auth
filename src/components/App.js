@@ -213,7 +213,7 @@ function App() {
           setUserEmail(email);
           setLoggedIn(true);
 
-          navigate("/");
+          navigate("/", { replace: true });
         }
         console.log(res);
       })

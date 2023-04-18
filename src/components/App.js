@@ -25,7 +25,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isInfoToolTipOpen, setInfoToolTipOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
-  const [currentUser, getCurrentUser] = useState({
+  const [currentUser, setCurrentUser] = useState({
     about: "",
     avatar: "",
     name: "",
@@ -49,16 +49,18 @@ function App() {
   // Получаем данные с сервера и устанавливаем значения стейтов, используемых для
   // профиля пользователя и карточек
   useEffect(() => {
-    Promise.all([api.getData("/users/me"), api.getData("/cards")])
+    if (isLoggedIn) {
+      Promise.all([api.getData("/users/me"), api.getData("/cards")])
 
-      .then(([userData, cardData]) => {
-        getCurrentUser(userData);
-        setCards([...cardData]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+        .then(([userData, cardData]) => {
+          setCurrentUser(userData);
+          setCards([...cardData]);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [isLoggedIn]);
   // Если пользователь зарегестрирован (токен есть в localStorage ),
   // то переходим сразу на страницу с карточками
   useEffect(() => {
@@ -148,7 +150,7 @@ function App() {
     setApi
       .setData("/users/me", "PATCH", userInfo)
       .then((updatedUser) => {
-        getCurrentUser(updatedUser);
+        setCurrentUser(updatedUser);
         closeAllPopups();
       })
       .catch((err) => {
@@ -162,7 +164,7 @@ function App() {
     setApi
       .setData("/users/me/avatar", "PATCH", { avatar: link })
       .then((updatedAvatar) => {
-        getCurrentUser(updatedAvatar);
+        setCurrentUser(updatedAvatar);
         closeAllPopups();
       })
       .catch((err) => {
@@ -190,7 +192,7 @@ function App() {
       .register(email, password)
       .then((res) => {
         setRegStatus({ image: Yes, message: "Вы успешно зарегистрировались!" });
-        navigate("/sign-in");
+        navigate("/signin");
         console.log(res);
       })
       .catch(() => {

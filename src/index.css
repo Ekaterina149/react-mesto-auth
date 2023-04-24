@@ -60,3 +60,15 @@
 @import url("./blocks/popup/__image/_size_auth/popup__image_size_auth.css");
 @import url("./blocks/popup/__container/_size_auth/popup__container_size_auth.css");
 @import url("./blocks/popup/__header/_size_auth/popup__header_size_auth.css");
+
+.user__input-error {
+  position: absolute;
+  top: 25px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #f0d5d5;
+  padding-top: 5px;
+  display: block;
+}

@@ -1,21 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
+import { useFormAndValidation } from "../hook/useFormAndValidation";
 function Login({ onAuthorize }) {
-  const [formValue, setFormValue] = useState({
-    email: "",
-    password: "",
-  });
-  function handleChange(e) {
-    const { name, value } = e.target;
-
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
-  }
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormAndValidation();
   function handleSubmit(evt) {
-    const { email, password } = formValue;
     evt.preventDefault();
-    onAuthorize(email, password);
+    if (isValid) {
+      const { email, password } = values;
+      onAuthorize(email, password);
+    }
+    resetForm();
   }
   return (
     <div className="user">
@@ -26,6 +20,7 @@ function Login({ onAuthorize }) {
           name="form"
           method="get"
           onSubmit={handleSubmit}
+          noValidate
         >
           <fieldset className="user__fieldset">
             <label className="user__label">
@@ -36,10 +31,13 @@ function Login({ onAuthorize }) {
                 name="email"
                 placeholder="email"
                 minLength="2"
+                value={values.email}
                 onChange={handleChange}
                 required
               />
-              <span className="placeInput-error user__input-error"></span>
+              <span className="placeInput-error popup__input-error">
+                {errors.email}
+              </span>
             </label>
             <label className="user__label">
               <input
@@ -49,9 +47,13 @@ function Login({ onAuthorize }) {
                 name="password"
                 placeholder="Пароль"
                 onChange={handleChange}
+                minLength="2"
                 required
+                value={values.password}
               />
-              <span className="linkInput-error user__input-error"></span>
+              <span className="linkInput-error popup__input-error">
+                {errors.password}
+              </span>
             </label>
           </fieldset>
           <button

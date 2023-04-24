@@ -1,6 +1,6 @@
 import PopupWithForm from "./PopupWithForm";
-// import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import { useState, useEffect } from "react";
+import { useFormAndValidation } from "../hook/useFormAndValidation";
+import { useEffect } from "react";
 function AddPlacePopup({
   formName,
   title,
@@ -9,26 +9,25 @@ function AddPlacePopup({
   onAddPlace,
   isLoading,
 }) {
-  const [name, setName] = useState("");
-  const [link, setLink] = useState("");
-  // const currentUser = useContext(CurrentUserContext);
-  function handleChange(evt, stateFunction) {
-    stateFunction(evt.target.value);
-  }
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormAndValidation();
+
   function handleSubmit(evt) {
     // Запрещаем браузеру переходить по адресу формы
     evt.preventDefault();
-    // console.log(currentUser);
+
     // Передаём значения управляемых компонентов во внешний обработчик
-    onAddPlace({
-      name,
-      link,
-    });
+    if (isValid) {
+      const { placeName, link } = values;
+      onAddPlace({
+        name: placeName,
+        link,
+      });
+    }
   }
   useEffect(() => {
     if (!isOpen) {
-      setName("");
-      setLink("");
+      resetForm({ placeName: "", link: "" }, {}, {});
     }
   }, [isOpen]);
 
@@ -47,18 +46,18 @@ function AddPlacePopup({
             className="popup__input popup__input_type_place"
             type="text"
             id="placeInput"
-            name="name"
-            value={name}
+            name="placeName"
+            value={values.placeName}
             placeholder="Название"
             minLength="2"
             maxLength="30"
-            // pattern="^[a-zA-ZА-Яа-яЁё\.\'\-\s]+$"
+            pattern="^[a-zA-ZА-Яа-яЁё\s\-]+$"
             required
-            onChange={(evt) => {
-              handleChange(evt, setName);
-            }}
+            onChange={handleChange}
           />
-          <span className="placeInput-error popup__input-error"></span>
+          <span className="placeInput-error popup__input-error">
+            {errors.placeName}
+          </span>
         </label>
         <label className="popup__label">
           <input
@@ -66,14 +65,14 @@ function AddPlacePopup({
             type="url"
             id="linkInput"
             name="link"
-            value={link}
+            value={values.link}
             placeholder="Ссылка на картинку"
             required
-            onChange={(evt) => {
-              handleChange(evt, setLink);
-            }}
+            onChange={handleChange}
           />
-          <span className="linkInput-error popup__input-error"></span>
+          <span className="linkInput-error popup__input-error">
+            {errors.link}
+          </span>
         </label>
       </>
     </PopupWithForm>

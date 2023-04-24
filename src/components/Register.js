@@ -1,22 +1,16 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useFormAndValidation } from "../hook/useFormAndValidation";
 function Register({ linkBottomPage, onRegister, route }) {
-  const [formValue, setFormValue] = useState({
-    email: "",
-    password: "",
-  });
-  function handleChange(e) {
-    const { name, value } = e.target;
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormAndValidation();
 
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
-  }
   function handleSubmit(evt) {
-    const { email, password } = formValue;
+    const { email, password } = values;
     evt.preventDefault();
-    onRegister(email, password);
+    if (isValid) {
+      onRegister(email, password);
+      resetForm();
+    }
   }
   return (
     <div className="user">
@@ -27,6 +21,7 @@ function Register({ linkBottomPage, onRegister, route }) {
           name="form"
           method="get"
           onSubmit={handleSubmit}
+          noValidate
         >
           <fieldset className="user__fieldset">
             <label className="user__label">
@@ -37,11 +32,13 @@ function Register({ linkBottomPage, onRegister, route }) {
                 name="email"
                 placeholder="email"
                 minLength="2"
-                value={formValue.email}
+                value={values.email}
                 onChange={handleChange}
                 required
               />
-              <span className="placeInput-error user__input-error"></span>
+              <span className="placeInput-error user__input-error">
+                {errors.email}
+              </span>
             </label>
             <label className="user__label">
               <input
@@ -49,12 +46,15 @@ function Register({ linkBottomPage, onRegister, route }) {
                 type="password"
                 id="passwordInput"
                 name="password"
+                minLength="8"
                 placeholder="Пароль"
-                value={formValue.password}
+                value={values.password}
                 onChange={handleChange}
                 required
               />
-              <span className="linkInput-error user__input-error"></span>
+              <span className="linkInput-error user__input-error">
+                {errors.password}
+              </span>
             </label>
           </fieldset>
           <button

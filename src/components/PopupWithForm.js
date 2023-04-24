@@ -32,9 +32,9 @@ function PopupWithForm({
         <h2 className="popup__header">{title}</h2>
         <form
           className="popup__form"
-          name={name}
           method="get"
           onSubmit={onSubmit}
+          noValidate
         >
           <fieldset className="popup__fieldset">{children}</fieldset>
           <button

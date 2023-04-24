@@ -1,6 +1,8 @@
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
+import { useFormAndValidation } from "../hook/useFormAndValidation";
+
 function EditProfilePopup({
   formName,
   title,
@@ -9,28 +11,26 @@ function EditProfilePopup({
   onUpdateUser,
   isLoading,
 }) {
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormAndValidation();
   const currentUser = useContext(CurrentUserContext);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  function handleChange(evt, stateFunction) {
-    stateFunction(evt.target.value);
-  }
 
   useEffect(() => {
     if (!isOpen) {
-      setName(currentUser.name);
-      setDescription(currentUser.about);
+      resetForm({ name: currentUser.name, about: currentUser.about });
     }
   }, [isOpen, currentUser]);
   function handleSubmit(evt) {
     // Запрещаем браузеру переходить по адресу формы
     evt.preventDefault();
-
+    const { name, about } = values;
     // Передаём значения управляемых компонентов во внешний обработчик
-    onUpdateUser({
-      name,
-      about: description,
-    });
+    if (isValid) {
+      onUpdateUser({
+        name,
+        about,
+      });
+    }
   }
   return (
     <PopupWithForm
@@ -47,36 +47,36 @@ function EditProfilePopup({
             className="popup__input popup__input_type_name"
             type="text"
             id="nameInput"
-            name="nameInput"
+            name="name"
             placeholder="Имя"
-            value={name}
+            value={values.name}
             minLength="3"
             maxLength="40"
             pattern="^[a-zA-ZА-Яа-яЁё\s\-]+$"
             required
-            onChange={(evt) => {
-              handleChange(evt, setName);
-            }}
+            onChange={handleChange}
           />
-          <span className="nameInput-error popup__input-error"></span>
+          <span className="nameInput-error popup__input-error">
+            {errors.name}
+          </span>
         </label>
         <label className="popup__label">
           <input
             className="popup__input popup__input_type_job"
             type="text"
             id="jobInput"
-            name="jobInput"
+            name="about"
             placeholder="Деятельность"
             minLength="2"
             maxLength="200"
             pattern="^[a-zA-ZА-Яа-яЁё\s\-]+$"
             required
-            value={description}
-            onChange={(evt) => {
-              handleChange(evt, setDescription);
-            }}
+            value={values.about}
+            onChange={handleChange}
           />
-          <span className="jobInput-error popup__input-error"></span>
+          <span className="jobInput-error popup__input-error">
+            {errors.about}
+          </span>
         </label>
       </>
     </PopupWithForm>
